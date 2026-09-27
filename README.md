@@ -35,6 +35,37 @@ npm run frames:optimize   # resizes to 1600w/960w, renames, writes manifest.json
 ```
 No code changes are required. Target budget: ≤ ~120 frames, ≤ ~60 KB/frame desktop, ≤ ~30 KB mobile.
 
+### Frame quality
+
+**Rendering** (`src/frames.ts`, `src/main.ts`)
+- **Exact-frame gating.** `draw()` only renders the frame whose index was asked for. If it
+  hasn't arrived yet the previous frame is held, rather than substituting the nearest loaded
+  one — that substitution made the sequence appear to jump mid-scrub.
+- **Mipmap downscale.** Frames are resampled once into a cached surface at the exact device
+  resolution they occupy, by repeated halving (a box filter) rather than a single bilinear
+  `drawImage` scale. Halving keeps detail and stops the shimmer you get scrubbing a 1600w
+  frame into a small viewport. Surfaces are `OffscreenCanvas` where available, and rebuild
+  lazily after a resize.
+- **DPR-aware.** The render target follows `devicePixelRatio`, including a
+  `(resolution: …dppx)` listener so dragging the window between displays re-renders crisply.
+
+**Encoding & delivery** (`scripts/optimize-frames.sh`, `manifest.json`)
+- `-filter Lanczos` + a mild `-unsharp` — sharper resize, micro-contrast restored without ringing.
+- `-sampling-factor 1x1` — 4:4:4 chroma, so the cyan/blue UI accents don't bleed.
+- `-interlace Plane` — progressive, first scan paints early.
+- **Variant-aware manifest.** `variants[]` lists every set with its real dimensions;
+  `pickVariant()` picks the smallest set that covers the viewport at the capped DPR, and
+  steps up automatically as soon as a larger set exists. Emit one with:
+  ```bash
+  RETINA_WIDTH=2400 npm run frames:optimize   # needs a source at least that wide
+  ```
+  Manifests without `variants` still work — the old width-based path is kept as a fallback.
+
+> The committed frames were produced before these encoder settings existed and there is no
+> 1920×1080 source in the repo, so they were deliberately left untouched: re-encoding already
+> downscaled JPEGs is lossy-on-lossy. Run `npm run frames:optimize` against the real source to
+> pick up the quality gains.
+
 ## Deploy
 - **GitHub Pages:** Settings → Pages → Source: *GitHub Actions*. Merging to `main` deploys — first copy `docs/github-pages-workflow.yml` to `.github/workflows/deploy.yml` (the agent token cannot push workflow files).
 - **Vercel / Netlify:** import the repo; build `npm run build`, output `dist`.
