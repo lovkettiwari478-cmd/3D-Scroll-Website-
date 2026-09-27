@@ -1,0 +1,14 @@
+{
+  "name": "manisk-website",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "frames:placeholder": "bash scripts/placeholder-frames.sh",
+    "frames:optimize": "bash scripts/optimize-frames.sh"
+  },
+  "devDependencies": { "typescript": "^5.6.0", "vite": "^6.0.0" }
+}
