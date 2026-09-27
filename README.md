@@ -3,7 +3,21 @@
 Cinematic, scroll-controlled website for MANISK. Built by Lovket.
 
 ## Stack
-Vite + vanilla TypeScript (no framework — ~3 kB gzipped JS). Hero = `<canvas>` driven by a JPG frame sequence.
+Vite + vanilla TypeScript (no framework, no external runtime libraries — ~4 kB gzipped JS).
+
+## How it works
+The full 150-frame MANISK sequence lives on a fixed `<canvas>` stage behind the whole page.
+The entire document scroll drives the sequence: scrolling down plays the frames forward,
+scrolling up reverses them — normal browser scrolling, no hijacking.
+
+- **Six chapters:** Intro · Intelligence · Execution · Security · Future · Creator
+- **HUD:** top progress bar with chapter ticks, live frame counter, chapter rail,
+  chapter menu, `SYS · ONLINE` status chip
+- **Sound:** procedural WebAudio ambience (no audio files), **off by default** — starts
+  only after the user taps the Sound button
+- **Motion:** progressive reveals per chapter; full `prefers-reduced-motion` support
+  (static opening frame, no autonomous animation)
+- **Mobile:** serves the 960w frame set on small screens / save-data, compact HUD
 
 ## Develop
 ```bash
