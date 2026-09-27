@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>MANISK — Personal AI Operating System</title>
+  <meta name="description" content="MANISK is a personal AI operating system in development — one intelligence designed to coordinate your tasks, memory, information and tools. Built by Lovket." />
+  <meta name="theme-color" content="#050608" />
+  <meta name="color-scheme" content="dark" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MANISK — Personal AI Operating System" />
+  <meta property="og:description" content="One AI. Your digital world. A personal AI operating system built by Lovket." />
+  <meta property="og:image" content="og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" />
+  <link rel="preload" as="image" href="frames/mobile/frame_0001.jpg" media="(max-width: 767px)" />
+  <link rel="preload" as="image" href="frames/desktop/frame_0001.jpg" media="(min-width: 768px)" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav" data-nav>
+    <a class="logo" href="#top" aria-label="MANISK home"><span class="logo-mark" aria-hidden="true"></span>MANISK</a>
+    <nav class="nav-links" id="nav-menu" aria-label="Primary">
+      <a href="#product">Product</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#vision">Vision</a>
+      <a href="#about">About</a>
+      <a class="btn btn-sm nav-cta" href="#product">Explore</a>
+    </nav>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu" data-menu><span></span><span></span></button>
+  </header>
+
+  <main id="main">
+    <!-- HERO: scroll-controlled frame sequence -->
+    <section class="hero" id="top" aria-label="MANISK introduction" data-hero>
+      <div class="hero-pin">
+        <div class="hero-stage" data-stage>
+          <canvas class="hero-canvas" data-canvas aria-hidden="true"></canvas>
+        </div>
+        <div class="hero-vignette" aria-hidden="true"></div>
+        <div class="hero-grid" aria-hidden="true"></div>
+
+        <div class="hero-ui" data-hero-ui>
+          <p class="eyebrow reveal-line">Personal AI Operating System</p>
+          <h1 class="hero-title"><span class="reveal-line">MANISK</span></h1>
+          <p class="hero-desc reveal-line">One intelligence, designed to understand your context and coordinate the digital life around you.</p>
+          <div class="hero-cta reveal-line">
+            <a class="btn btn-primary" href="#product">Explore MANISK</a>
+            <a class="btn" href="#capabilities">See Capabilities</a>
+          </div>
+        </div>
+
+        <div class="hero-hud" aria-hidden="true">
+          <span class="mono" data-frame-label>SEQ 000</span>
+          <span class="hud-bar"><span data-progress></span></span>
+          <span class="mono hud-scroll" data-scroll-hint>SCROLL</span>
+        </div>
+        <div class="loader" data-loader role="status" aria-live="polite">
+          <span class="mono">Loading sequence <span data-load-pct>0</span>%</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section intro" id="product">
+      <div class="container">
+        <p class="eyebrow reveal">01 — Product</p>
+        <h2 class="h2 reveal">One AI.<br />Your Digital World.</h2>
+        <div class="intro-grid">
+          <p class="lead reveal">MANISK is being designed as a personal AI operating system — a single, private layer of intelligence that sits across your digital life instead of living inside one more app.</p>
+          <ul class="coord-list reveal" aria-label="What MANISK is designed to coordinate">
+            <li><span class="mono">01</span>Tasks</li>
+            <li><span class="mono">02</span>Memory</li>
+            <li><span class="mono">03</span>Information</li>
+            <li><span class="mono">04</span>Automation</li>
+            <li><span class="mono">05</span>Productivity</li>
+            <li><span class="mono">06</span>Connected tools</li>
+          </ul>
+        </div>
+        <p class="note reveal"><span class="dot" aria-hidden="true"></span>MANISK is in active development. Capabilities below are labelled by status — nothing here is presented as shipped unless it is.</p>
+      </div>
+    </section>
+
+    <section class="section" id="capabilities">
+      <div class="container">
+        <p class="eyebrow reveal">02 — Capabilities</p>
+        <h2 class="h2 reveal">The system, by design.</h2>
+        <p class="lead reveal narrow">The core capability areas MANISK is architected around. Each is part of the product's design direction and in development.</p>
+        <div class="cards" data-cards>
+          <article class="card reveal"><i class="ic ic-intel" aria-hidden="true"></i><h3>Personal Intelligence</h3><p>An assistant that reasons with you, shaped around how you work rather than a generic chat window.</p><span class="tag">In development</span></article>
+          <article class="card reveal"><i class="ic ic-memory" aria-hidden="true"></i><h3>Memory</h3><p>Long-term, user-controlled memory so context isn't lost between conversations.</p><span class="tag">In development</span></article>
+          <article class="card reveal"><i class="ic ic-orch" aria-hidden="true"></i><h3>Task Orchestration</h3><p>Breaking goals into steps and coordinating them across the tools you already use.</p><span class="tag">In development</span></article>
+          <article class="card reveal"><i class="ic ic-auto" aria-hidden="true"></i><h3>Automation</h3><p>Repeatable workflows that run on your terms, with you kept in the loop.</p><span class="tag">In development</span></article>
+          <article class="card reveal"><i class="ic ic-sec" aria-hidden="true"></i><h3>Security</h3><p>Privacy as a foundation: your data, your permissions, clear boundaries.</p><span class="tag">Design principle</span></article>
+          <article class="card reveal"><i class="ic ic-know" aria-hidden="true"></i><h3>Personal Knowledge</h3><p>Your notes, documents and references organised into something you can ask.</p><span class="tag">In development</span></article>
+          <article class="card reveal"><i class="ic ic-tools" aria-hidden="true"></i><h3>Connected Tools</h3><p>A single layer that talks to your apps and services instead of replacing them.</p><span class="tag">Planned</span></article>
+          <article class="card reveal"><i class="ic ic-ctx" aria-hidden="true"></i><h3>Context Awareness</h3><p>Understanding what you're doing now to offer help that is relevant, not noisy.</p><span class="tag">Planned</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section vision" id="vision">
+      <div class="vision-glow" aria-hidden="true" data-parallax="0.15"></div>
+      <div class="container">
+        <p class="eyebrow reveal">03 — Vision &amp; Roadmap</p>
+        <h2 class="h2 reveal">Where MANISK<br />is heading.</h2>
+        <p class="lead reveal narrow">This is the direction, not a feature list. The roadmap describes what MANISK aims to become.</p>
+        <ol class="roadmap">
+          <li class="reveal"><span class="mono phase">Phase 01 · Now</span><h3>Foundation</h3><p>Core assistant, memory architecture and the private-by-default system design.</p></li>
+          <li class="reveal"><span class="mono phase">Phase 02 · Next</span><h3>Orchestration</h3><p>Multi-step task handling and first connections to everyday tools.</p></li>
+          <li class="reveal"><span class="mono phase">Phase 03 · Future</span><h3>Ambient OS</h3><p>A context-aware layer across devices — one AI that quietly runs your digital world.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="container about-inner">
+        <p class="eyebrow reveal">04 — Creator</p>
+        <h2 class="h2 reveal">Built by Lovket</h2>
+        <p class="lead reveal">MANISK is being developed by Lovket, CEO and creator, as a personal AI operating system project — built independently, with care, one layer at a time.</p>
+        <a class="btn btn-primary reveal" href="#top">Back to the beginning</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="logo"><span class="logo-mark" aria-hidden="true"></span>MANISK</span>
+      <span class="muted">© <span data-year></span> MANISK. Personal AI Operating System.</span>
+    </div>
+  </footer>
+
+  <div class="signature" aria-label="Made with Lovket">Made with <strong>Lovket</strong></div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

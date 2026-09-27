@@ -1,0 +1,1 @@
+{ "name": "MANISK", "short_name": "MANISK", "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }], "theme_color": "#050608", "background_color": "#050608", "display": "standalone" }
