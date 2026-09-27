@@ -20,60 +20,81 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" />
   <link rel="preload" as="image" href="frames/mobile/frame_0001.jpg" media="(max-width: 767px)" />
   <link rel="preload" as="image" href="frames/desktop/frame_0001.jpg" media="(min-width: 768px)" />
+  <noscript><style>[data-reveal]{opacity:1 !important;transform:none !important;filter:none !important}.scroll-hint,.loader{display:none}</style></noscript>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
+  <!-- Fixed cinematic stage: the 150-frame MANISK sequence lives here for the whole page -->
+  <div class="stage" data-stage aria-hidden="true">
+    <canvas data-canvas></canvas>
+    <div class="stage-vignette"></div>
+    <div class="stage-grid"></div>
+  </div>
+
+  <!-- Scroll progress bar with chapter ticks -->
+  <div class="progress" aria-hidden="true">
+    <span class="progress-fill" data-progress></span>
+    <span class="progress-ticks" data-ticks></span>
+  </div>
+
   <header class="nav" data-nav>
-    <a class="logo" href="#top" aria-label="MANISK home"><span class="logo-mark" aria-hidden="true"></span>MANISK</a>
-    <nav class="nav-links" id="nav-menu" aria-label="Primary">
-      <a href="#product">Product</a>
-      <a href="#capabilities">Capabilities</a>
-      <a href="#vision">Vision</a>
-      <a href="#about">About</a>
-      <a class="btn btn-sm nav-cta" href="#product">Explore</a>
+    <a class="logo" href="#intro" aria-label="MANISK home"><span class="logo-mark" aria-hidden="true"></span>MANISK</a>
+    <nav class="chapters-menu" aria-label="Chapters">
+      <a href="#intro" data-ch-link="intro"><sup>01</sup>Intro</a>
+      <a href="#intelligence" data-ch-link="intelligence"><sup>02</sup>Intelligence</a>
+      <a href="#execution" data-ch-link="execution"><sup>03</sup>Execution</a>
+      <a href="#security" data-ch-link="security"><sup>04</sup>Security</a>
+      <a href="#future" data-ch-link="future"><sup>05</sup>Future</a>
+      <a href="#creator" data-ch-link="creator"><sup>06</sup>Creator</a>
     </nav>
-    <button class="menu-btn" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu" data-menu><span></span><span></span></button>
+    <div class="nav-tools">
+      <span class="ch-label mono" data-ch-label aria-hidden="true">CH 01 · INTRO</span>
+      <span class="sys mono" data-sys role="status"><i class="sys-dot" aria-hidden="true"></i>SYS · <b data-sys-state>STANDBY</b></span>
+      <button class="sound-btn mono" data-sound aria-pressed="false" aria-label="Toggle ambient sound — currently off">
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span data-sound-label>SOUND OFF</span>
+      </button>
+    </div>
   </header>
 
+  <!-- Chapter navigation rail -->
+  <nav class="rail" data-rail aria-label="Chapter navigation">
+    <button type="button" data-go="intro" aria-label="Chapter 1 — Intro"><span class="mono">Intro</span><i aria-hidden="true"></i></button>
+    <button type="button" data-go="intelligence" aria-label="Chapter 2 — Intelligence"><span class="mono">Intelligence</span><i aria-hidden="true"></i></button>
+    <button type="button" data-go="execution" aria-label="Chapter 3 — Execution"><span class="mono">Execution</span><i aria-hidden="true"></i></button>
+    <button type="button" data-go="security" aria-label="Chapter 4 — Security"><span class="mono">Security</span><i aria-hidden="true"></i></button>
+    <button type="button" data-go="future" aria-label="Chapter 5 — Future"><span class="mono">Future</span><i aria-hidden="true"></i></button>
+    <button type="button" data-go="creator" aria-label="Chapter 6 — Creator"><span class="mono">Creator</span><i aria-hidden="true"></i></button>
+  </nav>
+
+  <!-- Frame counter HUD -->
+  <div class="hud-frame mono" data-frame-hud aria-hidden="true">FRAME <b data-frame-now>001</b><em>/ <span data-frame-total>150</span></em></div>
+
   <main id="main">
-    <!-- HERO: scroll-controlled frame sequence -->
-    <section class="hero" id="top" aria-label="MANISK introduction" data-hero>
-      <div class="hero-pin">
-        <div class="hero-stage" data-stage>
-          <canvas class="hero-canvas" data-canvas aria-hidden="true"></canvas>
-        </div>
-        <div class="hero-vignette" aria-hidden="true"></div>
-        <div class="hero-grid" aria-hidden="true"></div>
-
-        <div class="hero-ui" data-hero-ui>
-          <p class="eyebrow reveal-line">Personal AI Operating System</p>
-          <h1 class="hero-title"><span class="reveal-line">MANISK</span></h1>
-          <p class="hero-desc reveal-line">One intelligence, designed to understand your context and coordinate the digital life around you.</p>
-          <div class="hero-cta reveal-line">
-            <a class="btn btn-primary" href="#product">Explore MANISK</a>
-            <a class="btn" href="#capabilities">See Capabilities</a>
-          </div>
-        </div>
-
-        <div class="hero-hud" aria-hidden="true">
-          <span class="mono" data-frame-label>SEQ 000</span>
-          <span class="hud-bar"><span data-progress></span></span>
-          <span class="mono hud-scroll" data-scroll-hint>SCROLL</span>
-        </div>
-        <div class="loader" data-loader role="status" aria-live="polite">
-          <span class="mono">Loading sequence <span data-load-pct>0</span>%</span>
+    <!-- CHAPTER 01 · INTRO -->
+    <section class="chapter ch-intro" id="intro" data-chapter="intro" data-ch-name="Intro" aria-label="Chapter 1 — Intro">
+      <span class="ch-num" aria-hidden="true">01</span>
+      <div class="container">
+        <p class="eyebrow" data-reveal>Personal AI Operating System</p>
+        <h1 class="giant" data-reveal>MANISK</h1>
+        <p class="lead narrow" data-reveal>One intelligence, designed to understand your context and coordinate the digital life around you.</p>
+        <div class="cta-row" data-reveal>
+          <a class="btn btn-primary" href="#intelligence">Explore MANISK</a>
+          <a class="btn" href="#execution">See the System</a>
         </div>
       </div>
     </section>
 
-    <section class="section intro" id="product">
+    <!-- CHAPTER 02 · INTELLIGENCE -->
+    <section class="chapter ch-intel" id="intelligence" data-chapter="intelligence" data-ch-name="Intelligence" aria-label="Chapter 2 — Intelligence">
+      <span class="ch-num" aria-hidden="true">02</span>
       <div class="container">
-        <p class="eyebrow reveal">01 — Product</p>
-        <h2 class="h2 reveal">One AI.<br />Your Digital World.</h2>
-        <div class="intro-grid">
-          <p class="lead reveal">MANISK is being designed as a personal AI operating system — a single, private layer of intelligence that sits across your digital life instead of living inside one more app.</p>
-          <ul class="coord-list reveal" aria-label="What MANISK is designed to coordinate">
+        <p class="eyebrow" data-reveal>Chapter 02 · Intelligence</p>
+        <h2 class="h2" data-reveal>One AI.<br />Your digital world.</h2>
+        <div class="split">
+          <p class="lead" data-reveal>MANISK is being designed as a personal AI operating system — a single, private layer of intelligence that sits across your digital life instead of living inside one more app.</p>
+          <ul class="coord-list panel" data-reveal aria-label="What MANISK is designed to coordinate">
             <li><span class="mono">01</span>Tasks</li>
             <li><span class="mono">02</span>Memory</li>
             <li><span class="mono">03</span>Information</li>
@@ -82,48 +103,73 @@
             <li><span class="mono">06</span>Connected tools</li>
           </ul>
         </div>
-        <p class="note reveal"><span class="dot" aria-hidden="true"></span>MANISK is in active development. Capabilities below are labelled by status — nothing here is presented as shipped unless it is.</p>
+        <p class="note" data-reveal><span class="dot" aria-hidden="true"></span>MANISK is in active development. Everything here is design direction — nothing is presented as shipped unless it is.</p>
       </div>
     </section>
 
-    <section class="section" id="capabilities">
+    <!-- CHAPTER 03 · EXECUTION -->
+    <section class="chapter ch-exec" id="execution" data-chapter="execution" data-ch-name="Execution" aria-label="Chapter 3 — Execution">
+      <span class="ch-num" aria-hidden="true">03</span>
       <div class="container">
-        <p class="eyebrow reveal">02 — Capabilities</p>
-        <h2 class="h2 reveal">The system, by design.</h2>
-        <p class="lead reveal narrow">The core capability areas MANISK is architected around. Each is part of the product's design direction and in development.</p>
-        <div class="cards" data-cards>
-          <article class="card reveal"><i class="ic ic-intel" aria-hidden="true"></i><h3>Personal Intelligence</h3><p>An assistant that reasons with you, shaped around how you work rather than a generic chat window.</p><span class="tag">In development</span></article>
-          <article class="card reveal"><i class="ic ic-memory" aria-hidden="true"></i><h3>Memory</h3><p>Long-term, user-controlled memory so context isn't lost between conversations.</p><span class="tag">In development</span></article>
-          <article class="card reveal"><i class="ic ic-orch" aria-hidden="true"></i><h3>Task Orchestration</h3><p>Breaking goals into steps and coordinating them across the tools you already use.</p><span class="tag">In development</span></article>
-          <article class="card reveal"><i class="ic ic-auto" aria-hidden="true"></i><h3>Automation</h3><p>Repeatable workflows that run on your terms, with you kept in the loop.</p><span class="tag">In development</span></article>
-          <article class="card reveal"><i class="ic ic-sec" aria-hidden="true"></i><h3>Security</h3><p>Privacy as a foundation: your data, your permissions, clear boundaries.</p><span class="tag">Design principle</span></article>
-          <article class="card reveal"><i class="ic ic-know" aria-hidden="true"></i><h3>Personal Knowledge</h3><p>Your notes, documents and references organised into something you can ask.</p><span class="tag">In development</span></article>
-          <article class="card reveal"><i class="ic ic-tools" aria-hidden="true"></i><h3>Connected Tools</h3><p>A single layer that talks to your apps and services instead of replacing them.</p><span class="tag">Planned</span></article>
-          <article class="card reveal"><i class="ic ic-ctx" aria-hidden="true"></i><h3>Context Awareness</h3><p>Understanding what you're doing now to offer help that is relevant, not noisy.</p><span class="tag">Planned</span></article>
+        <p class="eyebrow" data-reveal>Chapter 03 · Execution</p>
+        <h2 class="h2" data-reveal>The system,<br />by design.</h2>
+        <p class="lead narrow" data-reveal>The core capability areas MANISK is architected around. Each is part of the product's design direction and in development.</p>
+        <div class="cards">
+          <article class="card" data-reveal><i class="ic ic-intel" aria-hidden="true"></i><h3>Personal Intelligence</h3><p>An assistant that reasons with you, shaped around how you work rather than a generic chat window.</p><span class="tag">In development</span></article>
+          <article class="card" data-reveal><i class="ic ic-memory" aria-hidden="true"></i><h3>Memory</h3><p>Long-term, user-controlled memory so context isn't lost between conversations.</p><span class="tag">In development</span></article>
+          <article class="card" data-reveal><i class="ic ic-orch" aria-hidden="true"></i><h3>Task Orchestration</h3><p>Breaking goals into steps and coordinating them across the tools you already use.</p><span class="tag">In development</span></article>
+          <article class="card" data-reveal><i class="ic ic-auto" aria-hidden="true"></i><h3>Automation</h3><p>Repeatable workflows that run on your terms, with you kept in the loop.</p><span class="tag">In development</span></article>
+          <article class="card" data-reveal><i class="ic ic-sec" aria-hidden="true"></i><h3>Security</h3><p>Privacy as a foundation: your data, your permissions, clear boundaries.</p><span class="tag">Design principle</span></article>
+          <article class="card" data-reveal><i class="ic ic-know" aria-hidden="true"></i><h3>Personal Knowledge</h3><p>Your notes, documents and references organised into something you can ask.</p><span class="tag">In development</span></article>
+          <article class="card" data-reveal><i class="ic ic-tools" aria-hidden="true"></i><h3>Connected Tools</h3><p>A single layer that talks to your apps and services instead of replacing them.</p><span class="tag">Planned</span></article>
+          <article class="card" data-reveal><i class="ic ic-ctx" aria-hidden="true"></i><h3>Context Awareness</h3><p>Understanding what you're doing now to offer help that is relevant, not noisy.</p><span class="tag">Planned</span></article>
         </div>
       </div>
     </section>
 
-    <section class="section vision" id="vision">
-      <div class="vision-glow" aria-hidden="true" data-parallax="0.15"></div>
+    <!-- CHAPTER 04 · SECURITY -->
+    <section class="chapter ch-sec" id="security" data-chapter="security" data-ch-name="Security" aria-label="Chapter 4 — Security">
+      <span class="ch-num" aria-hidden="true">04</span>
       <div class="container">
-        <p class="eyebrow reveal">03 — Vision &amp; Roadmap</p>
-        <h2 class="h2 reveal">Where MANISK<br />is heading.</h2>
-        <p class="lead reveal narrow">This is the direction, not a feature list. The roadmap describes what MANISK aims to become.</p>
+        <p class="eyebrow" data-reveal>Chapter 04 · Security</p>
+        <h2 class="h2" data-reveal>Private<br />by design.</h2>
+        <p class="lead narrow" data-reveal>MANISK is built around a simple rule — your data belongs to you. Privacy isn't a layer added later; it's the foundation the system is being constructed on.</p>
+        <ul class="coord-list panel sec-list" data-reveal aria-label="Security principles">
+          <li><span class="mono">01</span><div><h3>Your data stays yours</h3><p>Stored under your control. Never mined, never sold.</p></div></li>
+          <li><span class="mono">02</span><div><h3>Explicit permissions</h3><p>MANISK acts only with access you grant — per tool, per task.</p></div></li>
+          <li><span class="mono">03</span><div><h3>Clear boundaries</h3><p>What leaves your device stays visible, auditable and revocable.</p></div></li>
+          <li><span class="mono">04</span><div><h3>You stay in the loop</h3><p>Automation runs on your terms, with approval where it matters.</p></div></li>
+        </ul>
+        <p class="note" data-reveal><span class="dot" aria-hidden="true"></span>Design principles — the standard MANISK is being built to.</p>
+      </div>
+    </section>
+
+    <!-- CHAPTER 05 · FUTURE -->
+    <section class="chapter ch-future" id="future" data-chapter="future" data-ch-name="Future" aria-label="Chapter 5 — Future">
+      <span class="ch-num" aria-hidden="true">05</span>
+      <div class="container">
+        <p class="eyebrow" data-reveal>Chapter 05 · Future</p>
+        <h2 class="h2" data-reveal>Where MANISK<br />is heading.</h2>
+        <p class="lead narrow" data-reveal>This is the direction, not a feature list. The roadmap describes what MANISK aims to become.</p>
         <ol class="roadmap">
-          <li class="reveal"><span class="mono phase">Phase 01 · Now</span><h3>Foundation</h3><p>Core assistant, memory architecture and the private-by-default system design.</p></li>
-          <li class="reveal"><span class="mono phase">Phase 02 · Next</span><h3>Orchestration</h3><p>Multi-step task handling and first connections to everyday tools.</p></li>
-          <li class="reveal"><span class="mono phase">Phase 03 · Future</span><h3>Ambient OS</h3><p>A context-aware layer across devices — one AI that quietly runs your digital world.</p></li>
+          <li data-reveal><span class="mono phase">Phase 01 · Now</span><h3>Foundation</h3><p>Core assistant, memory architecture and the private-by-default system design.</p></li>
+          <li data-reveal><span class="mono phase">Phase 02 · Next</span><h3>Orchestration</h3><p>Multi-step task handling and first connections to everyday tools.</p></li>
+          <li data-reveal><span class="mono phase">Phase 03 · Future</span><h3>Ambient OS</h3><p>A context-aware layer across devices — one AI that quietly runs your digital world.</p></li>
         </ol>
       </div>
     </section>
 
-    <section class="section about" id="about">
-      <div class="container about-inner">
-        <p class="eyebrow reveal">04 — Creator</p>
-        <h2 class="h2 reveal">Built by Lovket</h2>
-        <p class="lead reveal">MANISK is being developed by Lovket, CEO and creator, as a personal AI operating system project — built independently, with care, one layer at a time.</p>
-        <a class="btn btn-primary reveal" href="#top">Back to the beginning</a>
+    <!-- CHAPTER 06 · CREATOR -->
+    <section class="chapter ch-creator" id="creator" data-chapter="creator" data-ch-name="Creator" aria-label="Chapter 6 — Creator">
+      <span class="ch-num" aria-hidden="true">06</span>
+      <div class="container creator-inner">
+        <p class="eyebrow" data-reveal>Chapter 06 · Creator</p>
+        <h2 class="h2" data-reveal>Built by Lovket.</h2>
+        <p class="lead narrow" data-reveal>MANISK is being developed by Lovket, CEO and creator, as a personal AI operating system project — built independently, with care, one layer at a time.</p>
+        <p class="status-chip mono" data-reveal><span class="dot" aria-hidden="true"></span>Status · In active development</p>
+        <div class="cta-row" data-reveal>
+          <a class="btn btn-primary" href="#intro">Back to the Beginning</a>
+        </div>
       </div>
     </section>
   </main>
@@ -131,11 +177,13 @@
   <footer class="footer">
     <div class="container footer-inner">
       <span class="logo"><span class="logo-mark" aria-hidden="true"></span>MANISK</span>
-      <span class="muted">© <span data-year></span> MANISK. Personal AI Operating System.</span>
+      <span class="muted">© <span data-year></span> MANISK — Personal AI Operating System. Built by Lovket.</span>
     </div>
   </footer>
 
-  <div class="signature" aria-label="Made with Lovket">Made with <strong>Lovket</strong></div>
+  <!-- Loader + scroll hint -->
+  <div class="loader mono" data-loader role="status" aria-live="polite"><span>Loading sequence <b data-load-pct>0</b>%</span></div>
+  <div class="scroll-hint mono" data-hint aria-hidden="true">SCROLL<i></i></div>
 
   <script type="module" src="/src/main.ts"></script>
 </body>
