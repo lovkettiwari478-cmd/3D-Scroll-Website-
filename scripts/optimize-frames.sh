@@ -11,6 +11,6 @@ for f in $(ls "$SRC"/*.jp*g | sort -V); do
   convert "$f" -resize '1600x>' -quality 72 -interlace Plane -strip $OUT/desktop/$n
   convert "$f" -resize '960x>'  -quality 68 -interlace Plane -strip $OUT/mobile/$n
 done
-read W H < <(identify -format "%w %h" $OUT/desktop/frame_0001.jpg)
+W=$(identify -format "%w" $OUT/desktop/frame_0001.jpg); H=$(identify -format "%h" $OUT/desktop/frame_0001.jpg)
 printf '{ "count": %d, "width": %d, "height": %d, "pad": 4, "prefix": "frame_", "ext": "jpg", "placeholder": false }\n' $i $W $H > $OUT/manifest.json
 echo "Frames: $i  ${W}x${H}"; du -sh $OUT/desktop $OUT/mobile

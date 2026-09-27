@@ -14,7 +14,7 @@ npm run build     # outputs dist/
 
 ## Hero frames
 Frames live in `public/frames/{desktop,mobile}/frame_0001.jpg…` and are described by `public/frames/manifest.json`.
-**The current frames are TEMPORARY placeholders.** To install the real MANISK frames:
+The hero uses the real MANISK sequence (150 frames, 1920×1080 source). To replace it:
 ```bash
 mkdir source-frames && cp /path/to/your/frames/*.jpg source-frames/
 npm run frames:optimize   # resizes to 1600w/960w, renames, writes manifest.json
