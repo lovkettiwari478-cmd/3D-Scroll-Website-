@@ -8,16 +8,19 @@
 # Encoding choices, and why:
 #   -filter Lanczos          sharper than the default downscale filter; keeps
 #                            edges and fine detail instead of smearing them
-#   -unsharp                 a resize always loses micro-contrast — this puts
-#                            it back without ringing (radius 0, mild amount)
 #   -sampling-factor 1x1     4:4:4 chroma. The default 2x2 halves colour
 #                            resolution, which bleeds the cyan/blue UI accents
 #   -interlace Plane         progressive, so the first scan paints early
 #   -strip                   drop EXIF/colour profiles we never read
 #
+# Deliberately NO sharpening. The MANISK masters are already clean, so an
+# unsharp mask would not recover detail — it would only amplify the JPEG
+# blocking that a low-quality encode leaves behind. Set SHARPEN to opt in.
+#
 # Env overrides:
 #   DESKTOP_WIDTH (1600)  MOBILE_WIDTH (960)
-#   DESKTOP_QUALITY (76)  MOBILE_QUALITY (72)
+#   DESKTOP_QUALITY (84)  MOBILE_QUALITY (78)
+#   SHARPEN               e.g. 0x0.6+0.5+0 — off by default
 #   RETINA_WIDTH          e.g. 2400 — also emits a desktop@2x set. Only worth
 #                         setting when the source is at least this wide; the
 #                         manifest always reports the width actually written.
@@ -27,10 +30,10 @@ SRC=${1:-source-frames}
 OUT=public/frames
 DW=${DESKTOP_WIDTH:-1600}
 MW=${MOBILE_WIDTH:-960}
-DQ=${DESKTOP_QUALITY:-76}
-MQ=${MOBILE_QUALITY:-72}
+DQ=${DESKTOP_QUALITY:-84}
+MQ=${MOBILE_QUALITY:-78}
 RW=${RETINA_WIDTH:-}
-SHARPEN=${SHARPEN:-0x0.6+0.5+0}
+SHARPEN=${SHARPEN:-}
 
 shopt -s nullglob
 srcs=("$SRC"/*.jp*g)
@@ -45,8 +48,9 @@ mkdir -p "$OUT/desktop" "$OUT/mobile"
 if [ -n "$RW" ]; then mkdir -p "$OUT/desktop@2x"; fi
 
 encode() { # $1=src $2=dest $3=width $4=quality
-  convert "$1" -filter Lanczos -resize "$3x>" -unsharp "$SHARPEN" \
-    -sampling-factor 1x1 -interlace Plane -strip -quality "$4" "$2"
+  local args=(-filter Lanczos -resize "$3x>" -sampling-factor 1x1 -interlace Plane -strip -quality "$4")
+  [ -n "$SHARPEN" ] && args+=(-unsharp "$SHARPEN")
+  convert "$1" "${args[@]}" "$2"
 }
 
 i=0
