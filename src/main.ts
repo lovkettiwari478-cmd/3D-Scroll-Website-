@@ -1,5 +1,5 @@
 import './style.css';
-import { FrameStore, type Manifest } from './frames';
+import { FrameStore, pickVariant, inlineVariant, type Manifest, type Variant } from './frames';
 
 const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T;
 const BASE = import.meta.env.BASE_URL;
@@ -32,7 +32,7 @@ const navChLinks = [...document.querySelectorAll<HTMLAnchorElement>('[data-ch-li
 let store: FrameStore | null = null;
 let last = 149;
 let target = 0, current = 0, drawn = -1, raf = 0;
-let cw = 0, chh = 0;
+let cw = 0, chh = 0, dpr = 1;
 let activeCh = -1;
 let chTops: number[] = [];
 let online = false;
@@ -43,18 +43,24 @@ const maxScrollNow = () => Math.max(1, document.documentElement.scrollHeight - i
 /* ---------- FRAME DRAWING ---------- */
 // Aspect-preserving fit. Landscape: cover. Portrait: keep the subject large
 // without cropping — fit to ~62% of height, black bg + vignette extend the rest.
-function draw(i: number) {
-  if (!store || !cw) return;
-  const img = store.nearest(clamp(Math.round(i), 0, last));
-  if (!img) return;
-  const iw = img.naturalWidth, ih = img.naturalHeight;
+function fitBox(iw: number, ih: number) {
   const portrait = chh > cw * 1.1;
   const s = portrait ? Math.max(cw / iw, (chh * 0.62) / ih) : Math.max(cw / iw, chh / ih);
   const dw = iw * s, dh = ih * s;
   const dx = (cw - dw) / 2, dy = portrait ? chh * 0.42 - dh / 2 : (chh - dh) / 2;
+  return { dx, dy, dw, dh };
+}
+
+function draw(i: number) {
+  if (!store || !cw) return;
+  const f = store.get(clamp(Math.round(i), 0, last));
+  // Not loaded yet — hold the last good frame instead of substituting a
+  // neighbour, which would make the sequence appear to jump while scrubbing.
+  if (!f) return;
+  const { dx, dy, dw, dh } = fitBox(f.width, f.height);
   ctx.fillStyle = '#050608';
   ctx.fillRect(0, 0, cw, chh);
-  ctx.drawImage(img, dx, dy, dw, dh);
+  ctx.drawImage(f.source, dx, dy, dw, dh);
   drawn = i;
   if (!online) {
     online = true;
@@ -65,13 +71,19 @@ function draw(i: number) {
 }
 
 function resize() {
-  const dpr = Math.min(devicePixelRatio || 1, 2);
+  dpr = Math.min(devicePixelRatio || 1, 2);
   cw = canvas.clientWidth;
   chh = canvas.clientHeight;
   canvas.width = Math.round(cw * dpr);
   canvas.height = Math.round(chh * dpr);
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.imageSmoothingQuality = 'high';
+  // Render frames at the exact device resolution they will occupy, so the
+  // canvas never rescales them a second time.
+  if (store && store.naturalWidth && store.naturalHeight) {
+    const b = fitBox(store.naturalWidth, store.naturalHeight);
+    store.setTarget(b.dw * dpr, b.dh * dpr);
+  }
   measure();
   drawn = -1;
   draw(Math.round(current));
@@ -270,7 +282,10 @@ async function init() {
   const manifest: Manifest = await fetch(`${BASE}frames/manifest.json`).then((r) => r.json());
   const conn = (navigator as unknown as { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
   const small = innerWidth < 768 || conn?.saveData || /2g/.test(conn?.effectiveType || '');
-  store = new FrameStore(manifest, `${BASE}frames/${small ? 'mobile' : 'desktop'}/`, small ? 4 : 6);
+  const chosen: Variant = manifest.variants?.length
+    ? pickVariant(manifest, { dpr: Math.min(devicePixelRatio || 1, 2), viewport: innerWidth, small })
+    : inlineVariant(manifest, small ? 'mobile' : 'desktop');
+  store = new FrameStore(manifest, { ...chosen, dir: `${BASE}frames/${chosen.dir}/` }, small ? 4 : 6);
   last = manifest.count - 1;
   frameTotal.textContent = String(manifest.count);
 
@@ -291,6 +306,9 @@ async function init() {
 
   document.addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', resize, { passive: true });
+  // Dragging the window between displays of different density changes the
+  // device pixel ratio without always firing resize.
+  matchMedia(`(resolution: ${dpr}dppx)`)?.addEventListener?.('change', resize);
   addEventListener('load', () => { measure(); schedule(); });
   // Re-measure once fonts settle (layout height can shift).
   document.fonts?.ready.then(() => { measure(); schedule(); });

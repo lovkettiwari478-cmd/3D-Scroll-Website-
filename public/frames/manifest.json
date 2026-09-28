@@ -1,1 +1,13 @@
-{ "count": 150, "width": 1600, "height": 900, "pad": 4, "prefix": "frame_", "ext": "jpg", "placeholder": false }
+{
+  "count": 150,
+  "width": 1600,
+  "height": 900,
+  "pad": 4,
+  "prefix": "frame_",
+  "ext": "jpg",
+  "placeholder": false,
+  "variants": [
+    { "dir": "mobile", "width": 960, "height": 540, "ext": "jpg", "prefix": "frame_", "pad": 4 },
+    { "dir": "desktop", "width": 1600, "height": 900, "ext": "jpg", "prefix": "frame_", "pad": 4 }
+  ]
+}
